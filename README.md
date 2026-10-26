@@ -1,74 +1,68 @@
 # symbolic-sensitivity-analysis
 
-Análise de sensibilidade pelo método diferencial com cálculo simbólico (SymPy): primeira e segunda ordem,
-funções vetoriais, validação nos vértices e comparação com outros sistemas de álgebra computacional e com
-diferenciação automática.
+Sensitivity analysis using the differential method with symbolic computation (SymPy): first and second order, vector functions, vertex validation, and comparison with other computer algebra systems and automatic differentiation.
 
-Código usado para obter os resultados do artigo **"Aplicação da Álgebra Computacional na Análise de
-Sensibilidade de Modelos Matemáticos"**. Linguagem: Python 3 (testado com 3.12 e SymPy 1.14).
+Code used to obtain the results for the article **"Application of Computer Algebra in the Sensitivity Analysis of Mathematical Models"**. Language: Python 3 (tested with 3.12 and SymPy 1.14).
 
-## Instalação
+## Installation
 
-Obrigatório (uma vez):
+Required (once):
 
 ```
 pip install sympy
+
 ```
 
-Opcional, só para `medicao_desempenho.py` (o script pula o que não estiver instalado):
+Optional, only for `medicao_desempenho.py` (the script skips what is not installed):
 
 ```
 pip install symengine numpy jax autograd
+
 ```
 
-O Maxima (<https://maxima.sourceforge.io>) também é opcional; precisa do comando `maxima` no PATH.
+Maxima ([https://maxima.sourceforge.io](https://maxima.sourceforge.io)) is also optional; it requires the `maxima` command in your PATH.
 
-## Arquivos e tabelas do artigo que reproduzem
+## Files and the article tables they reproduce
 
-| Arquivo(s)                           | Execute                        | Gera / reproduz                                      |
-|--------------------------------------|--------------------------------|------------------------------------------------------|
-| `SSA.py` + `Relatorio.py`            | `python SSA.py`                | `ssa.html`: Tabela 4 (Modelo Exemplo, 1ª ordem)      |
-| `SSA2.py` + `Relatorio2.py`          | `python SSA2.py`               | `ssa2.html`: Tabela 14; Me₂ e Mre₂ de P2 e W         |
-| `SSA2_FAO56.py` (+ `Relatorio2.py`)  | `python SSA2_FAO56.py`         | `ssa2_fao56.html`: Tabela 10 (FAO-56, n = 8)         |
-| `SSA2_parede.py` (+ `Relatorio2.py`) | `python SSA2_parede.py`        | `ssa2_parede.html`: Tabela 11 (parede, n = 10)       |
-| `validacao_vertices.py`              | `python validacao_vertices.py` | Tabelas 5, 6, 12 e 13 e as comparações da seção 4.2  |
-| `medicao_desempenho.py`              | `python medicao_desempenho.py` | Tabelas 7, 8 e 9 (precisão e tempos dos métodos)     |
+| File(s) | Run | Generates / reproduces |
+| --- | --- | --- |
+| `SSA.py` + `Relatorio.py` | `python SSA.py` | `ssa.html`: Table 4 (Example Model, 1st order) |
+| `SSA2.py` + `Relatorio2.py` | `python SSA2.py` | `ssa2.html`: Table 14; Me₂ and Mre₂ of P2 and W |
+| `SSA2_FAO56.py` (+ `Relatorio2.py`) | `python SSA2_FAO56.py` | `ssa2_fao56.html`: Table 10 (FAO-56, n = 8) |
+| `SSA2_parede.py` (+ `Relatorio2.py`) | `python SSA2_parede.py` | `ssa2_parede.html`: Table 11 (wall, n = 10) |
+| `validacao_vertices.py` | `python validacao_vertices.py` | Tables 5, 6, 12, and 13 and comparisons from Sec. 4.2 |
+| `medicao_desempenho.py` | `python medicao_desempenho.py` | Tables 7, 8, and 9 (methods precision and execution times) |
 
-Mantenha os arquivos na mesma pasta: cada `SSA*.py` importa o `Relatorio*.py` correspondente.
-Os relatórios saem em HTML (vírgula decimal); abra no navegador ou importe no Excel (UTF-8).
+Keep the files in the same folder: each `SSA*.py` imports its corresponding `Relatorio*.py`. The reports are generated in HTML (using a decimal comma); open them in a browser or import them into Excel (UTF-8).
 
-## Resultados esperados (conferência rápida)
+## Expected results (quick check)
 
-- `ssa.html`: soma da linha Me = 1,19021; Pie = 0,10257; Mre = 0,58020.
-- `ssa2.html`: P2 = 2,05137 e W = 16,81725; Me₂ de P2 = 1,46413 e de W = 4,86863.
-- `ssa2_fao56.html`: ET0 = 5,46314; Me total = 0,53889; Mre total = 0,09864.
-- `ssa2_parede.html`: q = 18,82564; Me total = 3,35391; Mre total = 0,17816.
+* `ssa.html`: sum of the Me row = 1.19021; Pie = 0.10257; Mre = 0.58020.
+* `ssa2.html`: P2 = 2.05137 and W = 16.81725; Me₂ of P2 = 1.46413 and of W = 4.86863.
+* `ssa2_fao56.html`: ET0 = 5.46314; Total Me = 0.53889; Total Mre = 0.09864.
+* `ssa2_parede.html`: q = 18.82564; Total Me = 3.35391; Total Mre = 0.17816.
 
-## Para configurar outro modelo
+## Configuring a different model
 
-Em `SSA.py` ou `SSA2.py`, altere somente: `n`, os valores de `r` e `Δp`, a lista `var`, a linha que
-declara os símbolos e a função `f` (ou `F`). As demais linhas não mudam.
+In `SSA.py` or `SSA2.py`, change only: `n`, the values of `r` and `Δp`, the `var` list, the line declaring the symbols, and the `f` (or `F`) function. The remaining lines do not change.
 
-## Observações
+## Notes
 
-- Os valores nominais dos modelos FAO-56 e parede são **ilustrativos**, não medições.
-- `medicao_desempenho.py` usa, por padrão, os modelos M1, M2, M3, W14, W24 e W54 (cerca de 1 a 2 minutos).
-  Para reproduzir as oito colunas das Tabelas 7 a 9:
+* The nominal values for the FAO-56 and wall models are **illustrative**, not actual measurements.
+* `medicao_desempenho.py` uses models M1, M2, M3, W14, W24, and W54 by default (takes about 1 to 2 minutes).
+To reproduce the eight columns of Tables 7 to 9:
+```
+python medicao_desempenho.py --modelos M1,M2,M3,W14,W24,W54,W104,W204 --max-subs 104
 
-  ```
-  python medicao_desempenho.py --modelos M1,M2,M3,W14,W24,W54,W104,W204 --max-subs 104
-  ```
+```
 
-  Leva alguns minutos; o `subs` do SymPy não é executado acima de `--max-subs`, pois o tempo cresce muito.
-- Os tempos dependem do computador e das versões (em outro computador chegaram a ser 3 a 5 vezes maiores);
-  a ordenação dos métodos se mantém.
-- Os desvios do SymEngine podem diferir levemente entre plataformas (arredondamento de ponto flutuante);
-  continuam na ordem de 1e-15 ou menos.
-- Diferenças finitas: a linha "Dif. finitas" usa escalares NumPy (como no artigo); "Dif. finitas (float)"
-  usa ponto flutuante nativo e é de 3 a 8 vezes mais rápida. O tempo desse método depende da implementação.
-- No Windows, se `python` não funcionar, use `py`. Salve os `.py` em UTF-8 se for editá-los.
 
-## Como citar
+This takes a few minutes; SymPy's `subs` is not executed above `--max-subs`, as execution time grows significantly.
+* Execution times depend on your computer and software versions (on another machine they were up to 3 to 5 times slower); however, the performance ranking of the methods remains consistent.
+* SymEngine deviations may differ slightly between platforms (due to floating-point rounding); they remain on the order of 1e-15 or less.
+* Finite differences: the "Dif. finitas" row uses NumPy scalars (as in the article); "Dif. finitas (float)" uses native floating-point operations and is 3 to 8 times faster. The speed of this method depends heavily on the implementation.
+* On Windows, if the `python` command doesn't work, try using `py`. Save your `.py` files in UTF-8 if you edit them.
 
-Se usar este código, cite o artigo "Aplicação da Álgebra Computacional na Análise de Sensibilidade de
-Modelos Matemáticos" (referência completa a ser acrescentada após a publicação).
+## How to cite
+
+If you use this code, please cite the article "Application of Computer Algebra in the Sensitivity Analysis of Mathematical Models" (full reference to be added after publication).ão).
